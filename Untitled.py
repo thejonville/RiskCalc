@@ -9,8 +9,8 @@ tick_values = {
     "MGC": 10,      # Micro Gold: $10/tick
     "NQ": 20,       # Nasdaq E-mini: $20/tick
     "MNQ": 2,       # Nasdaq Micro: $2/tick
-    "BTC": 5,       # Bitcoin Futures: $5/tick (CME standard)
-    "ETH": 5,       # Ethereum Futures: $5/tick (CME standard)
+    "BTCUSD": 1,    # Bitcoin spot: $1/pip per lot
+    "ETHUSD": 1     # Ethereum spot: $1/pip per lot
 }
 
 st.write("Enter your desired risk and stop size (in ticks):")
@@ -31,7 +31,7 @@ for market, tick_value in tick_values.items():
     actual_risk = contracts * stop_ticks * tick_value
     data["Market"].append(market)
     # Show as "lots" for crypto, "contracts" for others
-    if market in ["BTC", "MBT", "ETH", "MET"]:
+    if market in ["BTCUSD", "ETHUSD"]:
         data["Contracts/Lots"].append(f"{contracts} lots")
     else:
         data["Contracts/Lots"].append(contracts)
