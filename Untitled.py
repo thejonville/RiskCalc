@@ -10,13 +10,15 @@ tick_values = {
     "NQ": 20,       # Nasdaq E-mini: $20/tick
     "MNQ": 2,       # Nasdaq Micro: $2/tick
     "BTC": 5,       # Bitcoin Futures: $5/tick (CME standard)
+    "MBT": 0.50,    # Micro Bitcoin: $0.50/tick
     "ETH": 5,       # Ethereum Futures: $5/tick (CME standard)
+    "MET": 0.10     # Micro Ethereum: $0.10/tick
 }
 
 st.write("Enter your desired risk and stop size (in ticks):")
 
 risk_amount = st.number_input("Dollar risk per trade", min_value=0.0, value=200.0)
-stop_ticks = st.number_input("Stop size (in ticks)", min_value=1, value=8)
+stop_ticks = st.number_input("Stop size (in ticks)", min_value=0.1, value=8.0, step=0.1)
 
 st.header("Recommended Contracts and Dollar Risk")
 
