@@ -5,10 +5,12 @@ st.title("Futures Contracts Position Sizer")
 
 # Updated tick values
 tick_values = {
-    "GC": 100,    # Gold Futures: $100/tick
-    "MGC": 10,    # Micro Gold: $10/tick
-    "NQ": 20,     # Nasdaq E-mini: $20/tick
-    "MNQ": 2      # Nasdaq Micro: $2/tick
+    "GC": 100,      # Gold Futures: $100/tick
+    "MGC": 10,      # Micro Gold: $10/tick
+    "NQ": 20,       # Nasdaq E-mini: $20/tick
+    "MNQ": 2,       # Nasdaq Micro: $2/tick
+    "BTC": 5,       # Bitcoin Futures: $5/tick (CME standard)
+    "ETH": 5,       # Ethereum Futures: $5/tick (CME standard)
 }
 
 st.write("Enter your desired risk and stop size (in ticks):")
@@ -23,6 +25,7 @@ def calc_contracts(risk, stop, tick_value):
     return max(0, math.floor(contracts))
 
 data = {"Market": [], "Contracts": [], "Actual Dollar Risk": []}
+
 for market, tick_value in tick_values.items():
     contracts = calc_contracts(risk_amount, stop_ticks, tick_value)
     actual_risk = contracts * stop_ticks * tick_value
