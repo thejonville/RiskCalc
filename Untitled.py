@@ -24,16 +24,20 @@ def calc_contracts(risk, stop, tick_value):
     contracts = risk / (stop * tick_value)
     return max(0, math.floor(contracts))
 
-data = {"Market": [], "Contracts": [], "Actual Dollar Risk": []}
+data = {"Market": [], "Contracts/Lots": [], "Actual Dollar Risk": []}
 
 for market, tick_value in tick_values.items():
     contracts = calc_contracts(risk_amount, stop_ticks, tick_value)
     actual_risk = contracts * stop_ticks * tick_value
     data["Market"].append(market)
-    data["Contracts"].append(contracts)
+    # Show as "lots" for crypto, "contracts" for others
+    if market in ["BTC", "MBT", "ETH", "MET"]:
+        data["Contracts/Lots"].append(f"{contracts} lots")
+    else:
+        data["Contracts/Lots"].append(contracts)
     data["Actual Dollar Risk"].append(f"${actual_risk:,.2f}")
 
 st.table(data)
 
-if all(c == 0 for c in data["Contracts"]):
+if all(c == 0 for c in [int(str(c).split()[0]) if isinstance(c, str) else c for c in data["Contracts/Lots"]]):
     st.warning("Your risk amount is too small for any contract with the chosen stop size.")
