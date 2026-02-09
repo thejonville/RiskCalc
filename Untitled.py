@@ -7,6 +7,8 @@ st.title("Futures Contracts Position Sizer")
 tick_values = {
     "GC": 100,      # Gold Futures: $100/tick
     "MGC": 10,      # Micro Gold: $10/tick
+    "CL": 10,       # Crude Oil Futures: $10/tick
+    "MCL": 1,       # Micro Crude Oil: $1/tick
     "NQ": 20,       # Nasdaq E-mini: $20/tick
     "MNQ": 2,       # Nasdaq Micro: $2/tick
     "BTCUSD": 1,    # Bitcoin spot: $1/pip per lot
@@ -30,11 +32,13 @@ for market, tick_value in tick_values.items():
     contracts = calc_contracts(risk_amount, stop_ticks, tick_value)
     actual_risk = contracts * stop_ticks * tick_value
     data["Market"].append(market)
+    
     # Show as "lots" for crypto, "contracts" for others
     if market in ["BTCUSD", "ETHUSD"]:
         data["Contracts/Lots"].append(f"{contracts} lots")
     else:
         data["Contracts/Lots"].append(contracts)
+    
     data["Actual Dollar Risk"].append(f"${actual_risk:,.2f}")
 
 st.table(data)
